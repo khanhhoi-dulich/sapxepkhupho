@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<title>Phường Khánh Hội - Tài liệu lấy ý kiến sắp xếp khu phố</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.9.0/dist/tabler-icons.min.css" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #f4f6fb;
+    color: #1a1a2e;
+    min-height: 100vh;
+    padding: 0 0 3rem;
+  }
+  .container { max-width: 800px; margin: 0 auto; padding: 0 1rem; }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    background: #c0392b;
+    padding: .55rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .topbar-left { display: flex; align-items: center; gap: .75rem; }
+  .topbar-star {
+    width: 36px; height: 36px;
+    background: #f1c40f;
+    clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+    flex-shrink: 0;
+  }
+  .topbar-org { color: #fff; }
+  .topbar-org .sub { font-size: 10px; opacity: .85; letter-spacing: .04em; text-transform: uppercase; }
+  .topbar-org .main { font-size: 16px; font-weight: 700; letter-spacing: .01em; line-height: 1.2; }
+  .topbar-right { color: #fff; text-align: right; }
+  .topbar-right .sub { font-size: 10px; opacity: .75; }
+  .topbar-right .main { font-size: 12px; font-style: italic; opacity: .9; }
+
+  /* ── HERO CONTENT ── */
+  .hero-content {
+    background: #fff;
+    padding: 1.75rem 1.5rem 1.25rem;
+    border-bottom: 3px solid #f0f0f0;
+    margin-bottom: 1.5rem;
+  }
+  .hero-content h1 {
+    font-size: clamp(20px, 4vw, 28px);
+    font-weight: 800;
+    color: #1a1a2e;
+    line-height: 1.25;
+    margin-bottom: .5rem;
+  }
+  .hero-content h1 span { color: #c0392b; }
+  .hero-content .lead {
+    font-size: 13px;
+    color: #555;
+    line-height: 1.65;
+    margin-bottom: 1.5rem;
+    max-width: 560px;
+  }
+
+  /* ── STATS BANNER ── */
+  .stats-banner {
+    background: #f8f6f0;
+    border: 1px solid #e8e0d0;
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    gap: 0 1.5rem;
+    align-items: center;
+  }
+  .stat-block { text-align: center; }
+  .stat-num { font-size: clamp(36px, 7vw, 52px); font-weight: 800; line-height: 1; }
+  .stat-num.red { color: #c0392b; }
+  .stat-num.green { color: #1a7a4a; }
+  .stat-label { font-size: 11px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: .05em; margin-top: 4px; }
+  .stat-arrow {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+  }
+  .arrow-line {
+    width: 48px; height: 3px; background: #c0392b; position: relative;
+  }
+  .arrow-line::after {
+    content: '';
+    position: absolute; right: -1px; top: 50%;
+    transform: translateY(-50%);
+    border-left: 10px solid #c0392b;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+  }
+  .badge-reduce {
+    background: #f1c40f;
+    color: #7d5800;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 99px;
+  }
+  .facts { display: flex; flex-direction: column; gap: 10px; padding-left: 1rem; border-left: 2px solid #e0d8c8; }
+  .fact-row { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: #333; line-height: 1.4; }
+  .fact-num { font-weight: 700; color: #1a1a2e; white-space: nowrap; }
+  .fact-num.green { color: #1a7a4a; font-size: 15px; }
+  .fact-sub { color: #666; }
+
+  /* ── CLOCK BAR ── */
+  .clock-bar {
+    background: #1a3a6b;
+    color: #fff;
+    text-align: center;
+    padding: .5rem;
+    font-size: 13px;
+    letter-spacing: .06em;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+  }
+  .clock-invite { font-size: 11px; opacity: .7; margin-top: 2px; }
+
+  /* ── SECTION LABEL ── */
+  .section-label {
+    font-size: 12px; font-weight: 600; color: #6b7280;
+    text-transform: uppercase; letter-spacing: .07em;
+    margin-bottom: .65rem; padding-bottom: .4rem;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  /* ── CARDS GRID ── */
+  .cards-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: .75rem; margin-bottom: 1.5rem; }
+  .card {
+    background: #fff; border: 1px solid #e5e7eb; border-radius: 14px;
+    padding: 1rem 1.1rem; cursor: pointer;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  .card:hover { border-color: #c0392b; box-shadow: 0 2px 12px rgba(192,57,43,.1); }
+  .card i { font-size: 22px; color: #c0392b; display: block; margin-bottom: .4rem; }
+  .card-label { font-size: 14px; font-weight: 600; color: #1a1a2e; }
+  .card-sub { font-size: 11px; color: #6b7280; margin-top: 3px; }
+
+  /* ── PANELS ── */
+  .panel {
+    background: #fff; border: 1px solid #e5e7eb; border-radius: 14px;
+    padding: 1.25rem; margin-bottom: 1.25rem; display: none;
+  }
+  .panel.active { display: block; }
+  .panel-title { font-size: 15px; font-weight: 600; color: #1a1a2e; margin-bottom: .9rem; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .panel-title i { color: #c0392b; font-size: 18px; }
+
+  /* ── BADGE ── */
+  .badge { display: inline-block; padding: 2px 10px; border-radius: 99px; font-size: 11px; font-weight: 600; }
+  .badge-blue { background: #dbeafe; color: #1d4ed8; }
+  .badge-green { background: #dcfce7; color: #15803d; }
+  .badge-amber { background: #fef3c7; color: #b45309; }
+  .badge-red { background: #fee2e2; color: #991b1b; }
+
+  /* ── SEARCH ── */
+  .search-row { display: flex; gap: .5rem; margin-bottom: 1rem; }
+  .search-row input {
+    flex: 1; padding: 9px 14px; border: 1px solid #d1d5db;
+    border-radius: 8px; font-size: 14px; color: #1a1a2e; outline: none;
+  }
+  .search-row input:focus { border-color: #c0392b; }
+  .search-row button {
+    padding: 9px 18px; background: #c0392b; color: #fff; border: none;
+    border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer;
+  }
+  .search-row button:hover { background: #a93226; }
+  .result-box {
+    background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px;
+    padding: 1rem; font-size: 14px; min-height: 52px; color: #6b7280; margin-bottom: .75rem;
+  }
+  .result-box.found { color: #1a1a2e; }
+  .result-box strong { color: #c0392b; font-size: 16px; }
+
+  /* ── TABLE ── */
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: #f3f4f6; padding: 9px 10px; text-align: left; font-weight: 600; color: #6b7280; border-bottom: 1px solid #e5e7eb; white-space: nowrap; }
+  td { padding: 8px 10px; border-bottom: 1px solid #f3f4f6; color: #1a1a2e; }
+  tr:hover td { background: #f9fafb; }
+  tr.highlight td { background: #fef2f2 !important; font-weight: 600; }
+
+  /* ── MAP ── */
+  .tab-row { display: flex; gap: .5rem; margin-bottom: 1rem; }
+  .tab-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 16px; border: 1px solid #d1d5db; border-radius: 8px;
+    font-size: 13px; cursor: pointer; background: #fff; color: #374151;
+  }
+  .tab-btn.active { background: #c0392b; color: #fff; border-color: #c0392b; }
+  .embed-wrap { border-radius: 10px; overflow: hidden; border: 1px solid #e5e7eb; margin-top: .75rem; }
+  .embed-wrap iframe { display: block; width: 100%; border: none; }
+  .open-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: #c0392b; font-size: 13px; padding: 7px 14px;
+    border: 1px solid #f5c6c2; border-radius: 8px; text-decoration: none; background: #fdf2f1;
+  }
+  .open-link:hover { background: #fde8e6; }
+  .map-note { font-size: 12px; color: #9ca3af; margin-top: .6rem; line-height: 1.5; }
+
+  /* ── FORM ── */
+  .form-row { margin-bottom: .85rem; }
+  .form-row label { display: block; font-size: 12px; font-weight: 600; color: #6b7280; margin-bottom: 5px; }
+  .form-row input, .form-row textarea {
+    width: 100%; padding: 9px 14px; border: 1px solid #d1d5db;
+    border-radius: 8px; font-size: 14px; color: #1a1a2e; font-family: inherit; resize: vertical; outline: none;
+  }
+  .form-row input:focus, .form-row textarea:focus { border-color: #c0392b; }
+  .form-row textarea { min-height: 100px; }
+  .form-note { font-size: 12px; color: #6b7280; margin-bottom: 1rem; line-height: 1.6; background: #fef9c3; border-radius: 8px; padding: .75rem 1rem; }
+  .btn-submit {
+    background: #c0392b; color: #fff; border: none; border-radius: 8px;
+    padding: 10px 24px; font-size: 14px; font-weight: 600; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .btn-submit:hover { background: #a93226; }
+  .btn-reset {
+    background: #f3f4f6; color: #374151; border: 1px solid #d1d5db;
+    border-radius: 8px; padding: 10px 16px; font-size: 14px; cursor: pointer;
+    margin-left: .5rem; display: inline-flex; align-items: center; gap: 6px;
+  }
+  .stats-bar { display: flex; align-items: center; gap: 14px; padding: .85rem 1rem; background: #f3f4f6; border-radius: 10px; margin-top: 1.25rem; }
+  .stats-num { font-size: 22px; font-weight: 700; color: #c0392b; }
+
+  /* ── FOOTER ── */
+  .footer { text-align: center; font-size: 12px; color: #9ca3af; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #e5e7eb; }
+
+  @media (max-width: 520px) {
+    .stats-banner { grid-template-columns: 1fr; gap: 1rem; }
+    .facts { border-left: none; padding-left: 0; border-top: 1px solid #e0d8c8; padding-top: 1rem; }
+    .topbar-right { display: none; }
+  }
+
+.roadmap{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.road-item{background:#faf8ef;border:1px solid #e7d9a8;border-radius:14px;padding:16px;position:relative}
+.road-item.active{border:2px solid #d4a017}
+.road-item.active:before{content:'ĐANG THỰC HIỆN';position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:#c99700;color:#fff;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700}
+.road-num{width:38px;height:38px;border-radius:50%;background:#9b7400;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;margin-bottom:10px}
+.road-item h3{font-size:14px;color:#7a5b00;margin-bottom:8px}
+.road-item p{font-size:13px;color:#666;line-height:1.5}
+@media(max-width:768px){.roadmap{grid-template-columns:1fr}}
+
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="topbar-star"></div>
+    <div class="topbar-org">
+      <div class="sub">Ủy ban nhân dân</div>
+      <div class="main">Phường Khánh Hội</div>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <div class="sub">Tài liệu tuyên truyền</div>
+    <div class="main">Lấy ý kiến Nhân dân về sắp xếp khu phố</div>
+  </div>
+</div>
+
+<!-- HERO CONTENT -->
+<div class="hero-content">
+  <div class="container">
+    <h1>Sắp xếp lại khu phố<br><span>vì một Khánh Hội tinh gọn, gần dân hơn</span></h1>
+    <p class="lead">Tổ chức lại các khu phố theo hướng giảm số lượng, tăng quy mô — để bộ máy gọn nhẹ, quản lý thuận tiện và phục vụ Nhân dân tốt hơn.</p>
+
+    <div class="stats-banner">
+      <div class="stat-block">
+        <div class="stat-num red">32</div>
+        <div class="stat-label">Khu phố hiện nay</div>
+      </div>
+      <div class="stat-arrow">
+        <div class="arrow-line"></div>
+        <div class="badge-reduce">Giảm 50%</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;">
+        <div class="stat-block">
+          <div class="stat-num green">16</div>
+          <div class="stat-label">Khu phố mới</div>
+        </div>
+        <div class="facts">
+          <div class="fact-row">
+            <span class="fact-num green">100%</span>
+            <span class="fact-sub">khu phố đạt chuẩn ≥ 700 hộ</span>
+          </div>
+          <div class="fact-row">
+            <span class="fact-num">1.434</span>
+            <span class="fact-sub">hộ/khu phố bình quân (trước: 717)</span>
+          </div>
+          <div class="fact-row">
+            <span class="fact-num green">Nắn ranh</span>
+            <span class="fact-sub">theo trục đường chính, hết cảnh chia theo hẻm</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CLOCK BAR -->
+<div class="clock-bar">
+  <div id="clock">--:--:-- | --/--/----</div>
+  <div class="clock-invite">Kính mời Nhân dân tra cứu phương án sắp xếp khu phố</div>
+</div>
+
+<div class="container">
+
+  <!-- NAVIGATION CARDS -->
+  <div class="section-label">Bảng điều hành — 4 nội dung chính</div>
+  <div class="cards-grid">
+    <div class="card" onclick="showPanel('p-tracuu')">
+      <i class="ti ti-search"></i>
+      <div class="card-label">Tra cứu khu phố</div>
+      <div class="card-sub">Khu phố hiện tại → khu phố mới</div>
+    </div>
+    <div class="card" onclick="showPanel('p-bando')">
+      <i class="ti ti-map"></i>
+      <div class="card-label">Xem bản đồ</div>
+      <div class="card-sub">PDF và trực tuyến</div>
+    </div>
+    <div class="card" onclick="showPanel('p-tailieu')">
+      <i class="ti ti-file-text"></i>
+      <div class="card-label">Pháp lý</div>
+      <div class="card-sub">Tài liệu đính kèm</div>
+    </div>
+    <div class="card" onclick="showPanel('p-lotrinh')">
+      <i class="ti ti-timeline"></i>
+      <div class="card-label">Lộ trình thực hiện</div>
+      <div class="card-sub">Tiến độ triển khai phương án</div>
+    </div>
+  </div>
+
+  <!-- PANEL: TRA CỨU -->
+  <div id="p-tracuu" class="panel">
+    <div class="panel-title">
+      <span><i class="ti ti-search"></i> Tra cứu phương án sắp xếp</span>
+      <span class="badge badge-blue">16 khu phố mới</span>
+    </div>
+    <div class="search-row">
+      <input id="inp-search" type="number" min="1" max="32" placeholder="Nhập số khu phố mới (1 – 16)" />
+      <button onclick="doSearch()"><i class="ti ti-search" style="font-size:15px;vertical-align:-2px"></i> Tra cứu</button>
+    </div>
+    <div class="result-box" id="result-box">Nhập số khu phố để tra cứu.</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>STT</th><th>Khu phố mới</th><th>Khu phố hiện tại</th><th>Số hộ</th>
+        </tr></thead>
+        <tbody id="table-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- PANEL: BẢN ĐỒ -->
+  <div id="p-bando" class="panel">
+    <div class="panel-title"><span><i class="ti ti-map"></i> Bản đồ khu phố mới</span></div>
+    <div class="tab-row">
+      <button class="tab-btn" id="tab-pdf" onclick="showMap('pdf')">
+        <i class="ti ti-file-type-pdf"></i>Bản đồ PDF
+      </button>
+      <button class="tab-btn active" id="tab-online" onclick="showMap('online')">
+        <i class="ti ti-world"></i>Bản đồ trực tuyến
+      </button>
+    </div>
+    <div id="map-pdf" style="display:none">
+
+  <div style="margin-bottom:12px">
+    <a class="open-link"
+       href="https://drive.google.com/file/d/1w5Q6ndXMbLKycvh99-HL-uyCVfh3tnYa/view?usp=sharing"
+       target="_blank">
+       <i class="ti ti-external-link"></i>
+       Mở bản đồ PDF toàn màn hình
+    </a>
+  </div>
+
+  <iframe
+      src="https://drive.google.com/file/d/1w5Q6ndXMbLKycvh99-HL-uyCVfh3tnYa/preview"
+      width="100%"
+      height="700"
+      style="border:none;border-radius:12px">
+  </iframe>
+
+</div>
+    <div id="map-online">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:.6rem">
+        <span style="font-size:13px;color:#6b7280">Bản đồ khu phố Phường Khánh Hội</span>
+        <a class="open-link" href="https://www.google.com/maps/d/u/0/edit?mid=16KbSmu2-nf13oQMpKMJRuZPfc5bEmR0" target="_blank">
+          <i class="ti ti-external-link"></i>Mở bản đồ lớn
+        </a>
+      </div>
+      <div class="embed-wrap">
+        <iframe src="https://www.google.com/maps/d/u/0/embed?mid=16KbSmu2-nf13oQMpKMJRuZPfc5bEmR0&ll=10.759791262410118,106.70258410228512&z=17"
+          height="440" title="Bản đồ khu phố Phường Khánh Hội" allowfullscreen loading="lazy"></iframe>
+      </div>
+      <p class="map-note">Bản đồ hiển thị trực tiếp từ Google Maps. Nhấn "Mở bản đồ lớn" để xem toàn màn hình.</p>
+    </div>
+  </div>
+
+  <!-- PANEL: TÀI LIỆU -->
+  <div id="p-tailieu" class="panel">
+    <div class="panel-title"><span><i class="ti ti-folder"></i> Thư mục tài liệu pháp lý</span></div>
+    <a class="open-link" href="https://drive.google.com/drive/folders/1lr06AYEYWucbSh6IzLrFdKSMBIHZkp5W?usp=sharing" target="_blank">
+      <i class="ti ti-external-link"></i>Mở thư mục Google Drive
+    </a>
+    <div class="embed-wrap" style="margin-top:.85rem">
+      <iframe  src="https://drive.google.com/embeddedfolderview?id=1lr06AYEYWucbSh6IzLrFdKSMBIHZkp5W#grid" width="100%" height="420" frameborder="0" title="Thư mục tài liệu pháp lý Khánh Hội"></iframe>
+    </div>
+    <p class="map-note">Thay placeholder bằng link Google Drive thực tế của Phường Khánh Hội.</p>
+  </div>
+
+  
+<!-- PANEL: LỘ TRÌNH -->
+  <div id="p-lotrinh" class="panel">
+    <div class="panel-title"><span><i class="ti ti-timeline"></i> Lộ trình thực hiện</span></div>
+    <div class="roadmap">
+      <div class="road-item active"><div class="road-num">1</div><div><h3>Lấy ý kiến Nhân dân</h3><p>Về phương án sắp xếp và tên gọi khu phố mới.</p></div></div>
+      <div class="road-item"><div class="road-num">2</div><div><h3>Hoàn chỉnh Đề án</h3><p>Tiếp thu ý kiến, trình HĐND phường thông qua.</p></div></div>
+      <div class="road-item"><div class="road-num">3</div><div><h3>Ban hành quyết định</h3><p>Sắp xếp, kiện toàn tổ chức ở khu phố.</p></div></div>
+      <div class="road-item"><div class="road-num">4</div><div><h3>Đi vào hoạt động (từ 01/7/2026)</h3><p>16 khu phố mới ổn định, phục vụ Nhân dân.</p></div></div>
+    </div>
+  </div>
+
+  <div class="footer">© Bản quyền thuộc về <strong>UBND Phường Khánh Hội</strong></div>
+</div>
+
+
+<script>
+const DATA=[
+{id:"1",kp_moi:"KHU PHỐ 1",kp_hientai:"KP4 + KP5 + một phần KP7",soho:"1.283"},
+{id:"2",kp_moi:"KHU PHỐ 2",kp_hientai:"KP2 + KP3",soho:"1.291"},
+{id:"3",kp_moi:"KHU PHỐ 3",kp_hientai:"KP1",soho:"1.060"},
+{id:"4",kp_moi:"KHU PHỐ 4",kp_hientai:"KP9 + một phần KP10, KP13",soho:"1.407"},
+{id:"5",kp_moi:"KHU PHỐ 5",kp_hientai:"KP8 + KP15 + KP17 + phần KP7",soho:"1.771"},
+{id:"6",kp_moi:"KHU PHỐ 6",kp_hientai:"KP6 + KP16 + phần KP15, KP17",soho:"1.665"},
+{id:"7",kp_moi:"KHU PHỐ 7",kp_hientai:"KP22 + phần KP17, KP21",soho:"1.151"},
+{id:"8",kp_moi:"KHU PHỐ 8",kp_hientai:"KP14 + phần KP13, KP17, KP18, KP21",soho:"1.475"},
+{id:"9",kp_moi:"KHU PHỐ 9",kp_hientai:"KP11 + KP13 + phần KP10",soho:"1.398"},
+{id:"10",kp_moi:"KHU PHỐ 10",kp_hientai:"KP12",soho:"1.050"},
+{id:"11",kp_moi:"KHU PHỐ 11",kp_hientai:"KP19 + KP20 + phần KP18",soho:"1.820"},
+{id:"12",kp_moi:"KHU PHỐ 12",kp_hientai:"KP23 + KP28",soho:"1.476"},
+{id:"13",kp_moi:"KHU PHỐ 13",kp_hientai:"KP24 + KP27",soho:"1.622"},
+{id:"14",kp_moi:"KHU PHỐ 14",kp_hientai:"KP25 + KP26",soho:"1.599"},
+{id:"15",kp_moi:"KHU PHỐ 15",kp_hientai:"KP30 + phần KP29, KP31, KP32",soho:"1.374"},
+{id:"16",kp_moi:"KHU PHỐ 16",kp_hientai:"KP32 + phần KP29, KP31",soho:"1.499"}];
+
+function renderTable(highlight=''){
+ document.getElementById('table-body').innerHTML=DATA.map((r,i)=>`
+ <tr class="${r.id===highlight?'highlight':''}">
+ <td>${i+1}</td><td><span class="badge badge-blue">${r.kp_moi}</span></td>
+ <td>${r.kp_hientai}</td><td>${r.soho} hộ</td></tr>`).join('');
+}
+function doSearch(){
+ const v=document.getElementById('inp-search').value.trim();
+ const rb=document.getElementById('result-box');
+ if(!v){rb.innerHTML='Nhập số khu phố mới từ 1 đến 16.';return;}
+ const f=DATA.find(x=>x.id===v);
+ if(!f){rb.innerHTML='Không tìm thấy khu phố mới.';return;}
+ rb.innerHTML=`<div style="line-height:1.8"><div style="font-size:22px;font-weight:700;color:#c0392b">${f.kp_moi}</div><div><strong>Hình thành từ:</strong> ${f.kp_hientai}</div><div><strong>Tổng số hộ:</strong> ${f.soho} hộ</div></div>`;
+ rb.className='result-box found';
+ renderTable(v);
+}
+function showPanel(id){document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));const el=document.getElementById(id);if(el){el.classList.add('active');if(id==='p-tracuu') renderTable();}}
+function showMap(type){document.getElementById('map-pdf').style.display=type==='pdf'?'block':'none';document.getElementById('map-online').style.display=type==='online'?'block':'none';}
+function pad(n){return String(n).padStart(2,'0')}
+function updateClock(){const d=new Date();document.getElementById('clock').textContent=`${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())} | ${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()}`;}
+updateClock();setInterval(updateClock,1000);
+document.addEventListener('DOMContentLoaded',()=>{renderTable();document.getElementById('p-tracuu').classList.add('active');document.getElementById('inp-search').addEventListener('keydown',e=>{if(e.key==='Enter')doSearch();});});
+</script>
+
+</body>
+</html>
