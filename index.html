@@ -337,7 +337,7 @@
   <div id="p-tracuu" class="panel">
     <div class="panel-title">
       <span><i class="ti ti-search"></i> Tra cứu phương án sắp xếp</span>
-      <span class="badge badge-blue">16 khu phố mới</span>
+      <span class="badge badge-blue">Tra cứu từ 32 khu phố hiện tại</span>
     </div>
     <div class="search-row">
       <input id="inp-search" type="number" min="1" max="32" placeholder="Nhập số khu phố mới (1 – 16)" />
@@ -419,11 +419,11 @@
       <div class="road-item active"><div class="road-num">1</div><div><h3>Lấy ý kiến Nhân dân</h3><p>Về phương án sắp xếp và tên gọi khu phố mới.</p></div></div>
       <div class="road-item"><div class="road-num">2</div><div><h3>Hoàn chỉnh Đề án</h3><p>Tiếp thu ý kiến, trình HĐND phường thông qua.</p></div></div>
       <div class="road-item"><div class="road-num">3</div><div><h3>Ban hành quyết định</h3><p>Sắp xếp, kiện toàn tổ chức ở khu phố.</p></div></div>
-      <div class="road-item"><div class="road-num">4</div><div><h3>Đi vào hoạt động (từ 01/7/2026)</h3><p>16 khu phố mới ổn định, phục vụ Nhân dân.</p></div></div>
+      <div class="road-item"><div class="road-num">4</div><div><h3>Đi vào hoạt động (từ 01/7/2026)</h3><p>Tra cứu từ 32 khu phố hiện tại ổn định, phục vụ Nhân dân.</p></div></div>
     </div>
   </div>
 
-  <div class="footer">© Bản quyền thuộc về <strong>Ủy ban nhân dân Phường Khánh Hội</strong></div>
+  <div class="footer">© Bản quyền thuộc về <strong>UBND Phường Khánh Hội</strong></div>
 </div>
 
 
@@ -452,16 +452,41 @@ function renderTable(highlight=''){
  <td>${i+1}</td><td><span class="badge badge-blue">${r.kp_moi}</span></td>
  <td>${r.kp_hientai}</td><td>${r.soho} hộ</td></tr>`).join('');
 }
+
 function doSearch(){
- const v=document.getElementById('inp-search').value.trim();
- const rb=document.getElementById('result-box');
- if(!v){rb.innerHTML='Nhập số khu phố mới từ 1 đến 16.';return;}
- const f=DATA.find(x=>x.id===v);
- if(!f){rb.innerHTML='Không tìm thấy khu phố mới.';return;}
- rb.innerHTML=`<div style="line-height:1.8"><div style="font-size:22px;font-weight:700;color:#c0392b">${f.kp_moi}</div><div><strong>Hình thành từ:</strong> ${f.kp_hientai}</div><div><strong>Tổng số hộ:</strong> ${f.soho} hộ</div></div>`;
- rb.className='result-box found';
- renderTable(v);
+
+  const v=document.getElementById('inp-search').value.trim();
+  const rb=document.getElementById('result-box');
+
+  if(!v){
+    rb.innerHTML='Nhập số khu phố hiện tại từ 1 đến 32.';
+    return;
+  }
+
+  const results = DATA.filter(item=>{
+    const nums = [...item.kp_hientai.matchAll(/KP(\d+)/g)].map(x=>x[1]);
+    return nums.includes(v);
+  });
+
+  if(results.length===0){
+    rb.innerHTML='Không tìm thấy khu phố hiện tại '+v+'.';
+    return;
+  }
+
+  let out = '<div style="margin-bottom:12px;font-size:22px;font-weight:700;color:#c0392b">KHU PHỐ HIỆN TẠI '+v+'</div>';
+
+  results.forEach(item=>{
+    out += '<div style="background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:14px;margin-bottom:12px"><div style="font-size:24px;font-weight:800;color:#15803d;margin-bottom:8px">'+item.kp_moi+'</div><div><strong>Hình thành từ:</strong> '+item.kp_hientai+'</div><div style="margin-top:6px"><strong>Tổng số hộ:</strong> '+item.soho+' hộ</div></div>';
+  });
+
+  if(results.length>1){
+    out += '<div style="background:#fef3c7;padding:10px;border-radius:8px;color:#92400e">👉 Khu phố hiện tại '+v+' được phân chia vào nhiều khu phố mới.<br>👉 Vui lòng xem bản đồ để xác định chính xác vị trí.</div>';
+  }
+
+  rb.innerHTML=out;
+  rb.className='result-box found';
 }
+
 function showPanel(id){document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));const el=document.getElementById(id);if(el){el.classList.add('active');if(id==='p-tracuu') renderTable();}}
 function showMap(type){document.getElementById('map-pdf').style.display=type==='pdf'?'block':'none';document.getElementById('map-online').style.display=type==='online'?'block':'none';}
 function pad(n){return String(n).padStart(2,'0')}
