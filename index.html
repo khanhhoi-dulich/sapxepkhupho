@@ -227,11 +227,23 @@
   /* ── FOOTER ── */
   .footer { text-align: center; font-size: 12px; color: #9ca3af; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #e5e7eb; }
 
-  @media (max-width: 520px) {
-    .stats-banner { grid-template-columns: 1fr; gap: 1rem; }
-    .facts { border-left: none; padding-left: 0; border-top: 1px solid #e0d8c8; padding-top: 1rem; }
-    .topbar-right { display: none; }
-  }
+  @media (max-width: 768px) {
+  .topbar-right{display:none;}
+  .stats-banner{display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px;padding:20px 16px;}
+  .stats-banner > div:last-child{display:flex !important;flex-direction:column;align-items:center;gap:16px;width:100%;}
+  .stat-block{width:100%;}
+  .stat-num{font-size:56px;line-height:1;}
+  .stat-label{font-size:14px;}
+  .arrow-line{width:60px;}
+  .badge-reduce{font-size:13px;padding:5px 14px;}
+  .facts{width:100%;border-left:none;border-top:1px solid #e0d8c8;padding-left:0;padding-top:16px;text-align:left;}
+  .fact-row{display:flex;align-items:center;gap:10px;font-size:15px;line-height:1.5;margin-bottom:8px;}
+  .fact-num{min-width:95px;}
+  .clock-bar{padding:8px;}
+  .cards-grid{grid-template-columns:1fr;}
+  .search-row{flex-direction:column;}
+  .search-row button{width:100%;}
+}
 
 .roadmap{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
 .road-item{background:#faf8ef;border:1px solid #e7d9a8;border-radius:14px;padding:16px;position:relative}
@@ -340,7 +352,7 @@
       <span class="badge badge-blue">Tra cứu từ 32 khu phố hiện tại</span>
     </div>
     <div class="search-row">
-      <input id="inp-search" type="number" min="1" max="32" placeholder="Nhập số khu phố mới (1 – 16)" />
+      <input id="inp-search" type="number" min="1" max="32" placeholder="Nhập số khu phố mới (1 – 32)" />
       <button onclick="doSearch()"><i class="ti ti-search" style="font-size:15px;vertical-align:-2px"></i> Tra cứu</button>
     </div>
     <div class="result-box" id="result-box">Nhập số khu phố để tra cứu.</div>
